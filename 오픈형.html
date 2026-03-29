@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>오픈형</title>
+  <link rel="stylesheet" href="main.css"/>
+
+  <!-- ✅ Referer 전달 (YouTube 153 완화) -->
+  <meta name="referrer" content="origin">
+
+  <!-- ✅ 반응형 임베드 + 오버레이 -->
+  <style>
+    .embed { position: relative; aspect-ratio: 16/9; width: 100%; max-width: 960px; }
+    .embed iframe, .embed > div { width: 100%; height: 100%; display: block; }
+    .unmute-overlay{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,0.45); color:#fff;
+      font-weight:700; border:0; cursor:pointer;
+      font-size:1rem; padding:12px 18px;
+    }
+    .unmute-overlay:hover{ background:rgba(0,0,0,0.55); }
+    .unmute-overlay.is-hidden{ display:none; }
+  </style>
+</head>
+
+<!-- 위로 올라가기 버튼 -->
+<button class="to-top" aria-label="위로 올라가기">▲</button>
+
+<body>
+  <!-- ================= Header / Title ================= -->
+  <header class="title">
+    <a href="main.html" aria-label="홈으로">
+      <img src="logo.png" alt="사이트 로고" class="logo" />
+    </a>
+
+    <nav class="main-nav" aria-label="주요 메뉴">
+    <div class="nav-row">
+      <div class="menu-wrap">
+
+        <!-- ================= 상단 메뉴 (중복 제거 + 클릭 이동 유지) ================= -->
+        <ul class="menu" data-cols="7" role="menubar">
+          <li class="menu-item"><a href="모델링 프로그램.html">모델링 프로그램</a></li>
+          <li class="menu-item"><a href="슬라이싱 프로그램.html">슬라이싱 프로그램</a></li>
+          <li class="menu-item"><a href="공유 사이트.html">공유 사이트</a></li>
+          <li class="menu-item"><a href="제작방식 및 재료.html">제작방식 및 재료</a></li>
+          <li class="menu-item"><a href="후처리 공구.html">후처리 공구</a></li>
+          <li class="menu-item"><a href="Profiles &amp; G-code.html">Profiles &amp; G-code</a></li>
+          <li class="menu-item"><a href="고객지원.html">고객지원</a></li>
+        </ul>
+
+        <!-- ================= 메가 메뉴(중복 제목 제거 버전) ================= -->
+        <div class="mega-box" aria-label="하위 메뉴">
+          <div class="mega-columns" data-cols="7">
+
+            <div class="column">
+              <a href="Tinkercad.html">Tinkercad</a>
+              <a href="Fusion 360.html">Fusion 360</a>
+              <a href="Rhino3D.html">Rhino3D</a>
+            </div>
+
+            <div class="column">
+              <a href="Cura.html">Cura</a>
+              <a href="Orca Slicer.html">Orca Slicer</a>
+              <a href="Bambu Studio.html">Bambu Studio</a>
+            </div>
+
+            <div class="column">
+              <a href="Thingiverse.html">Thingiverse</a>
+              <a href="Maker World.html">Maker World</a>
+              <a href="Cults3D.html">Cults3D</a>
+            </div>
+
+            <div class="column">
+              <a href="제작방식 및 재료.html#sec-filament">필라멘트</a>
+              <a href="제작방식 및 재료.html#sec-resin">액상 재료</a>
+              <a href="제작방식 및 재료.html#sec-powder">분말 재료</a>
+            </div>
+
+            <div class="column">
+              <a href="수공구.html">수공구</a>
+              <a href="전동구.html">전동구</a>
+              <a href="기타.html">기타</a>
+            </div>
+
+            <div class="column">
+              <a href="ProFiles.html">Profiles</a>
+              <a href="G-Code.html">G-code</a>
+              <a href="start&end.html">start &amp; end</a>
+            </div>
+
+            <div class="column">
+              <a href="문의하기.html">문의하기</a>
+              <a href="다운로드.html">다운로드</a>
+              <a href="연혁.html">연혁 및 소개</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 검색창 그대로 유지 -->
+      <form class="nav-search" role="search" action="#" method="get">
+        <label for="q" class="sr-only">검색</label>
+        <input id="q" name="q" type="search" placeholder="검색…" />
+        <button type="submit" aria-label="검색">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M15.5 14h-.79l-.28-.27a6 6 0 10-.71.71l.27.28v.79l4.99 5L20.49 19l-5-5zm-6.5 0a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" fill="currentColor"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </nav>
+  </header>
+  <hr>
+
+    <!-- ================= 검색 스크립트 ================= -->
+  <script>
+  (function () {
+    const norm = s => (s || '')
+      .toLowerCase().normalize('NFKC')
+      .replace(/&/g, ' and ')
+      .replace(/[\u200B-\u200D\uFEFF]/g, '')
+      .replace(/[^\p{L}\p{N}]+/gu, '')
+      .trim();
+
+  /* -------------------------------------------------
+        🔧 ❷ 검색 가능한 페이지 인덱스
+  --------------------------------------------------*/
+  const catalog = [
+
+    // 모델링 프로그램
+    { page: 'Fusion 360.html', keywords: ['fusion', 'fusion360', 'f360', '퓨전', '퓨전360', '퓨전쓰릭식스티', 'fusion 360']},
+    { page: 'Tinkercad.html', keywords: ['tinkercad', '틴커캐드', '팅커캐드'] },
+    { page: 'Rhino3D.html', keywords: ['rhino', '라이노', '라노', 'rhinoceros', 'rhino 3d']},
+
+    // 슬라이싱 프로그램
+    { page: 'Bambu Studio.html', keywords: ['bambu','bambulab','밤부','밤부랩','뱀부','뱀부랩','밤부스튜디오','뱀부스튜디오']},
+    { page: 'Orca Slicer.html', keywords: ['orca','오르카','오르카슬라이서']},
+    { page: 'Cura.html', keywords: ['cura','큐라','울티메이커','ultimaker']},
+
+    // 공유 사이트
+    { page: 'Thingiverse.html', keywords: ['thingiverse','싱기버스','띵기버스']},
+    { page: 'Maker World.html', keywords: ['makerworld','메이커월드','메이커 월드']},
+    { page: 'Cults3D.html', keywords: ['cults','cults3d','컬츠','컬트','컬트3d']},
+
+    // 제작방식 & 재료
+    { page: '제작방식 및 재료.html', keywords: ['재료','제작방식','filament','필라멘트','resin','powder']},
+
+    // 후처리 공구
+    { page: '수공구.html', keywords: ['handtool','handtools','수공구'] },
+    { page: '전동구.html', keywords: ['powertool','powertools','전동구','전동공구'] },
+    { page: '기타.html', keywords: ['etc','misc','기타']},
+
+    // Profiles & G-code
+    { page: 'ProFiles.html', keywords: ['profiles','profile','프로파일','gcodeprofile']},
+    { page: 'G-Code.html', keywords: ['gcode','g코드','지코드','startgcode','endgcode']},
+
+    // 제작 방식 세부
+// ⭐ 필라멘트 → #sec-filament
+  { page: '제작방식 및 재료.html#sec-filament', keywords: [
+      '필라멘트','filament','pla','abs','petg','재료','플라스틱',,'fused']},
+
+  // ⭐ 액상 재료(레진) → #sec-resin
+  { page: '제작방식 및 재료.html#sec-resin', keywords: [
+      '액상재료','레진','resin','sla','msla','dlp','광조형','광경화','액상']},
+
+  // ⭐ 분말 재료 → #sec-powder
+  { page: '제작방식 및 재료.html#sec-powder', keywords: [
+      '분말재료','sls','saf','나일론','분말','파우더','파우더소결','소결방식','소결']},
+
+
+    // 재료 세부 페이지
+    { page: 'FDM.html', keywords: ['fdm','fff','적층','pla']},
+    { page: 'ABS.html', keywords: ['abs','에이비에스']},
+    { page: 'PETG.html', keywords: ['petg','페트지','투명필라멘트']},
+    { page: 'TPU.html', keywords: ['tpu','티피유','플렉시블','플렉시블 필라멘트']},
+    { page: 'PolyJet.html', keywords: ['PolyJet','폴리젯','Polyjet','polyjet']},
+    { page: 'DLP(P3).html', keywords: ['DLP','디엘피','DLP(P3)','델피']},
+    { page: 'SLA.html', keywords: ['sla','레진','광조형','광경화']},
+    { page: 'SLS.html', keywords: ['sls','에스엘에스']},
+    { page: 'SAF.html', keywords: ['SAF','에스에이에프']},
+
+    // 고객지원
+    { page: '문의하기.html', keywords: ['contact','문의','help','고객지원','문의하기']},
+    { page: '다운로드.html', keywords: ['download','다운로드','자료']},
+    { page: '연혁.html', keywords: ['about','소개','연혁','history']},
+  ];
+
+    const index = new Map();
+    for (const {page, keywords} of catalog) {
+      for (const k of keywords) index.set(norm(k), page);
+    }
+
+    const form = document.querySelector('.nav-search');
+    const input = document.querySelector('#q');
+    if (!form || !input) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const q = norm(input.value);
+      if (!q) return;
+
+      if (index.has(q)) { location.href = encodeURI(index.get(q)); return; }
+
+      for (const [key, page] of index.entries()) {
+        if (key.includes(q) || q.includes(key)) { location.href = encodeURI(page); return; }
+      }
+
+      const tokens = q.split(/([0-9]+|[a-z]+|[가-힣]+)/g).filter(Boolean);
+      if (tokens.length > 1) {
+        for (const [key, page] of index.entries()) {
+          if (tokens.every(t => key.includes(t))) { location.href = encodeURI(page); return; }
+        }
+      }
+
+      alert('검색 결과를 찾을 수 없습니다.\n예: Fusion, Cura, Blender, Thingiverse, Bambu, 라이노, 큐라, 레진, 전동공구 …');
+    });
+  })();
+  </script>
+
+  <!-- ================= Main ================= -->
+  <main>
+  <!-- 섹션: 왼쪽 정사각형 + 본문 -->
+  <section class="section" aria-labelledby="fdm-title">
+    <div class="sec-box">
+      <img src="pla.png" alt="메이커 월드 예시 이미지" />
+    </div>
+    <div class="sec-content">
+      <h2 id="fdm-title"></h2>
+      <p>BamBuLAB에서 자체 개발한 공유 사이트이다.</p>
+
+      <!-- ✅ 자세히 보기 버튼 -->
+      <a href="https://makerworld.com/ko" class="detail-btn" aria-label="Maker World 자세히 보기"target="_blank">홈페이지로 이동</a>
+    </div>
+  </section>
+</main>
+
+   <section class="media-section" aria-label="제품 소개">
+    <!-- 블록 1 -->
+    <div class="media-row">
+      <div class="media">
+        <img src="A1.png" alt="Fusion 360 작업 화면" loading="lazy">
+      </div>
+      <div class="copy">
+        <h3>오픈형</h3>
+        <p>전문가용 슬라이서로 더 세부적인 세팅이 가능하며,<br>
+          Bambu Slicer와 가장 유사한 외부 프로그램입니다.<br>
+         가장 먼저 마빈을 출력해 세팅을 확인합니다.</p>
+        <a class="btn btn--solid" href="https://makerworld.com/ko" target="_blank" rel="noopener">공유 사이트 살펴보기</a>
+        <a class="btn btn--ghost" href="https://www.thingiverse.com/thing:215703" target="_blank">마빈 출력</a>
+      </div>
+    </div>
+
+    <!-- 블록 2: 텍스트 + 유튜브 -->
+    <div class="media-row reverse">
+      <div class="media">
+        <div class="embed">
+          <iframe
+            id="yt-embed-1"
+            src="https://www.youtube.com/embed/32LlVdy2LxY?enablejsapi=1&rel=0&playsinline=1&modestbranding=1&autoplay=1&mute=1"
+            title="Orca Slicer 소개 영상"
+            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+
+          <!-- 제스처용 오버레이 -->
+          <button class="unmute-overlay" aria-label="소리 켜기">🔊 소리 켜기</button>
+        </div>
+      </div>
+      <div class="copy">
+        <h3>Orca Slicer의 기초부터 응용까지</h3>
+        <p>본인만의 세팅을 찾아 사용할 수 있다는 장점이 있으며,<br>
+            복잡한 세팅을 거쳐 최고의 품질을 기대할 수 있습니다.</p>
+        <a class="btn btn--solid" href="https://orca-slicer.com/" target="_blank">Orca slicer 설치</a>
+        <a class="btn btn--ghost" href="#process-title-1" target="_blank">이건 뭘넣지</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= YouTube Iframe API & 제스처 로직 (한 번만 포함) ================= -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    // 전역 재선언 충돌 방지: window 네임스페이스만 사용
+    window.ytPlayer = null;
+
+    // API 로드 후 호출됨 (전역 함수여야 함)
+    function onYouTubeIframeAPIReady() {
+      window.ytPlayer = new YT.Player('yt-embed-1', {
+        playerVars: {
+          origin: location.origin,  // localhost/127.0.0.1 혼용 금지 → 주소창과 동일
+          rel: 0,
+          playsinline: 1,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function (e) {
+            try {
+              // 정책 통과: 음소거 → 자동재생
+              e.target.mute();
+              e.target.playVideo();
+            } catch (err) {
+              console.warn('초기 재생 실패:', err);
+            }
+
+            // 클릭 시: 언뮤트 + 볼륨 60%
+            var btn = document.querySelector('.unmute-overlay');
+            if (btn) {
+              btn.addEventListener('click', function () {
+                try {
+                  e.target.unMute();
+                  e.target.setVolume(20); // 0~100
+                  e.target.playVideo();   // 일부 브라우저는 언뮤트 후 재호출 필요
+                  btn.classList.add('is-hidden');
+                } catch (err) {
+                  console.warn('언뮤트 실패:', err);
+                }
+              }, { once: true });
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+  <script>
+  document.querySelector('.to-top').addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+</body>
+</html>
