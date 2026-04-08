@@ -1592,12 +1592,12 @@ mark.key {
 
 /* ============================================================
     📱 모바일 최적화 (768px 이하)
-    - 7번 메뉴: 3행 1열 위치
-    - 검색창: 5번 메뉴 왼쪽 선 ~ 6번 메뉴 오른쪽 선 정렬
+    검색창 시작점: 5번 메뉴(2열) 왼쪽 테두리와 수직 일치
+    검색창 끝점: 6번 메뉴(3열) 오른쪽 테두리와 수직 일치
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 헤더: 중앙 정렬 최적화 */
+  /* 1. 헤더: 중앙 정렬 */
   body .title { 
     display: flex !important;
     flex-direction: column !important; 
@@ -1608,32 +1608,29 @@ mark.key {
     background: #ffffff !important;
   }
   
-  body .logo { 
-    width: 100px !important; 
-    margin-bottom: 15px !important; 
-  }
+  body .logo { width: 100px !important; margin-bottom: 15px !important; }
 
-  /* 2. 네비게이션 컨테이너: 검색창 위치 기준점 설정 */
+  /* 2. 네비게이션 컨테이너: 기준점(Relative) 설정 */
   body .nav-row {
     display: block !important;
     position: relative !important;
     width: 100% !important;
-    padding: 0 15px !important; /* 좌우 여백 15px */
+    padding: 0 15px !important; /* 좌우 가이드라인 15px */
     min-height: 185px !important; 
   }
 
-  /* 3. 메뉴 그리드: 3열 강제 고정 */
+  /* 3. 메뉴 그리드: 3열 강제 고정 (열당 33.33%) */
   body .menu {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important; /* 메뉴 버튼 사이 간격 */
+    gap: 10px !important; /* 메뉴 사이 간격 10px */
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
   }
 
-  /* 메뉴 버튼 디자인 */
+  /* 메뉴 버튼 공통 디자인 */
   body .menu-item > a {
     display: flex !important;
     align-items: center;
@@ -1649,21 +1646,21 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 5번 왼쪽(2열 시작) ~ 6번 오른쪽(3열 끝) 정렬 */
+  /* ⭐ 4. 검색창 위치 정밀 교정 (핵심 수정) */
   body .nav-search {
     display: flex !important;
     align-items: center;
     position: absolute !important;
     
-    /* 세로 위치: 메뉴 2개 높이 + 간격 고려 */
+    /* 7번 메뉴와 수평을 맞춤 */
     top: 116px !important; 
 
-    /* [왼쪽 끝] 1열(33.33%) + 간격(10px) 
-       => 2열(5번 메뉴)이 시작되는 수직선과 일치 */
-    left: calc(33.33% + 15px) !important; 
+    /* [왼쪽 라인] 5번 메뉴의 왼쪽 테두리에 정확히 맞춤 */
+    /* 33.33%(1열 너비) + 10px(메뉴 사이 gap)을 주면 2열 시작점과 일치합니다 */
+    left: calc(33.33% + 10px) !important; 
 
-    /* [오른쪽 끝] 컨테이너 여백(15px)과 일치 
-       => 3열(6번 메뉴)이 끝나는 수직선과 일치 */
+    /* [오른쪽 라인] 6번 메뉴의 오른쪽 테두리에 정확히 맞춤 */
+    /* 부모 패딩 15px와 동일하게 설정 */
     right: 15px !important; 
 
     width: auto !important; 
@@ -1676,7 +1673,6 @@ mark.key {
     box-shadow: none !important; 
   }
 
-  /* 검색창 내부 입력창 */
   body .nav-search input[type="search"] {
     flex: 1;
     width: 100% !important;
@@ -1686,16 +1682,8 @@ mark.key {
     background: transparent !important;
   }
 
-  /* 5. 배너 및 기타 반응형 */
-  body .main-banner { 
-    height: 160px !important; 
-    margin: 15px !important; 
-    border-radius: 12px !important; 
-  }
+  /* 5. 배너 및 기타 반응형 섹션 */
+  body .main-banner { height: 160px !important; margin: 15px !important; border-radius: 12px !important; }
   body .main-banner .banner-text { display: none !important; }
-  
-  body .media-row { 
-    grid-template-columns: 1fr !important; 
-    gap: 20px !important; 
-  }
+  body .media-row { grid-template-columns: 1fr !important; gap: 20px !important; }
 }
