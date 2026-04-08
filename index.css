@@ -1636,29 +1636,28 @@ mark.key {
     overflow: hidden;
   }
 
-/* 3. 검색창: 2열 시작선과 3열 끝선에 완벽하게 맞춤 */
+/* 3. 검색창: 상단 버튼들의 세로 라인에 칼같이 맞춤 */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* ⭐ 상단 2번/5번 버튼의 왼쪽 선부터 3번/6번 버튼의 오른쪽 선까지 차지 */
-    grid-column: 2 / 4 !important; 
-    
-    /* 너비 및 정렬 초기화 (그리드 선에 맡김) */
-    width: 100% !important;
+    /* ⭐ 상단 2-5번 버튼 왼쪽선 ~ 3-6번 버튼 오른쪽선에 맞추는 정밀 수치 */
+    width: calc(66.6% - 5px) !important; 
     max-width: none !important;
-    align-self: stretch !important;
     
-    /* 7번 메뉴 옆으로 이동 (수평 정렬) */
+    /* 정렬: 오른쪽 끝선에 자석처럼 붙임 */
+    align-self: flex-end !important;
+    margin-right: 0 !important; 
+    
+    /* 7번 메뉴와 수평 유지 */
     margin-top: -58px !important; 
-    margin-bottom: 10px !important;
+    margin-bottom: 15px !important;
     
     height: 48px !important;
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
     padding: 0 10px !important;
-    position: relative !important;
     z-index: 10;
   }
 
