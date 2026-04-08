@@ -1587,19 +1587,15 @@ mark.key {
 /* ============================================================
    📱 모바일 전용 최적화 (7번 메뉴 노출 & 검색창 우측 배치 최종본)
    ============================================================ */
+/* ============================================================
+   📱 모바일 전용 최적화 (겹침 해결 및 최종 레이아웃 교정본)
+   ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 헤더 및 네비게이션 레이아웃 */
-  .title { 
-    flex-direction: column !important; 
-    padding: 10px !important; 
-    height: auto !important;
-  }
-  .logo { width: 100px !important; margin: 0 auto 5px !important; }
-
+  /* 1. 네비게이션 부모 컨테이너 기준점 설정 */
   .nav-row {
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
+    position: relative !important; /* ⭐ 절대 위치 배치의 기준점 확보 */
     width: 100% !important;
     padding: 0 15px !important;
   }
@@ -1607,14 +1603,15 @@ mark.key {
   /* 2. 메뉴 그리드: 3열 강제 유지 */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3열 고정 */
     gap: 10px !important;
     width: 100% !important;
-    margin: 0 !important;
+    margin: 0 0 10px 0 !important; /* 아래 여백 */
     padding: 0 !important;
     list-style: none !important;
-    position: relative !important;
   }
+
+  .menu-item { display: block !important; }
 
   /* 메뉴 버튼 스타일 */
   .menu-item > a {
@@ -1622,12 +1619,11 @@ mark.key {
     align-items: center;
     justify-content: center;
     height: 48px !important;
-    font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
+    font-size: clamp(0.7rem, 2.5vw, 0.82rem) !important;
     line-height: 1.15 !important;
     font-weight: 700;
     word-break: keep-all !important;
     text-align: center;
-    padding: 0 4px !important;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -1635,28 +1631,29 @@ mark.key {
     overflow: hidden;
   }
 
-  /* ⭐ 3. 검색창: 7번 옆 2~3열 영역 내 우측 정렬 (겹침 방지) */
+  /* ⭐ 3. 검색창: 절대 위치로 8~9번 영역(우측 하단)에 강제 안착 */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* 2번째 칸부터 3번째 칸 영역 지정 */
-    grid-column: 2 / 4 !important; 
-    justify-self: end; /* ⭐ 할당 영역 내에서 우측으로 밀어 7번과 거리 확보 */
+    /* 기존의 translateY나 grid-column 설정을 무효화 */
+    transform: none !important; 
     
-    /* 7번 메뉴(고객지원)와 같은 높이에 두기 위해 위로 이동 */
-    transform: translateY(-58px) !important; 
-    margin-bottom: -48px !important; 
+    /* 부모(.nav-row)를 기준으로 우측 하단에 고정 */
+    position: absolute !important;
+    bottom: 0 !important;  /* 메뉴 그리드의 가장 아래에 정렬 */
+    right: 15px !important; /* .nav-row의 패딩값에 맞춰 정렬 */
     
-    height: 48px !important;
-    width: 100% !important;
-    max-width: 200px !important; /* ⭐ 너무 길어지지 않게 고정 */
+    /* 너비 계산: 전체 너비의 약 2/3 (3열 중 2칸)에서 간격을 뺀 수치 */
+    width: calc(66.6% - 15px) !important; 
+    max-width: 200px !important; /* 너무 길어지지 않게 제한 */
+    height: 48px !important; /* 메뉴 버튼 높이와 완전 일치 */
     
     background: #ffffff !important;
-    border: 1.5px solid #2563eb !important;
+    border: 1.5px solid #2563eb !important; /* 검색창 강조 테두리 */
     border-radius: 8px !important;
-    padding: 0 12px !important;
-    position: relative !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
     z-index: 10;
   }
 
@@ -1668,10 +1665,9 @@ mark.key {
     outline: none !important;
     font-size: 14px !important;
     background: transparent !important;
-    color: #334155;
   }
 
-  /* 4. 배너: 텍스트 제거 및 높이 압축 */
+  /* 4. 배너 및 본문 섹션 최적화 */
   .main-banner .banner-text { display: none !important; }
   .main-banner { 
     height: 160px !important; 
@@ -1679,16 +1675,17 @@ mark.key {
     border-radius: 12px !important;
   }
 
-  /* 5. 미디어 섹션: 가독성 비율 최적화 (0.55 : 1.45) */
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.55fr 1.45fr !important;
+    grid-template-columns: 0.6fr 1.4fr !important;
     gap: 12px !important;
     padding: 0 10px !important;
   }
   .copy h3 { font-size: 1rem !important; margin-bottom: 5px !important; font-weight: 800; }
   .copy p { font-size: 0.82rem !important; line-height: 1.5 !important; word-break: keep-all; }
 
-  /* 6. 카드 섹션: 1열 배치 */
-  .intro-cards { grid-template-columns: 1fr !important; padding: 0 20px !important; }
+  /* 헤더 정리 */
+  .title { flex-direction: column !important; padding: 10px !important; height: auto !important; }
+  .logo { width: 100px !important; margin: 0 auto 5px !important; }
+  .intro-cards { grid-template-columns: 1fr !important; }
 }
