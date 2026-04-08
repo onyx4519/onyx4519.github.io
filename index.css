@@ -1636,26 +1636,29 @@ mark.key {
     overflow: hidden;
   }
 
-/* 3. 검색창: 오른쪽 끝까지 꽉 채우기 (정밀 교정) */
+/* 3. 검색창: 2열 시작선과 3열 끝선에 완벽하게 맞춤 */
   .nav-search {
     display: flex !important;
     align-items: center;
     
-    /* ⭐ 핵심: 너비를 수동으로 지정하지 않고 비율로 꽉 채움 */
-    width: calc(66.6% + 4px) !important; /* 3칸 중 2칸을 빈틈없이 채우는 수치 */
-    max-width: none !important;         /* 너비 제한 해제 */
+    /* ⭐ 상단 2번/5번 버튼의 왼쪽 선부터 3번/6번 버튼의 오른쪽 선까지 차지 */
+    grid-column: 2 / 4 !important; 
     
-    /* 정렬: 7번 메뉴 오른쪽으로 정밀 이동 */
-    align-self: flex-end !important;
-    margin-right: 0 !important;          /* 오른쪽 끝에 딱 붙임 */
-    margin-top: -58px !important;        /* 7번 메뉴와 수평 맞춤 */
-    margin-bottom: 15px !important;
+    /* 너비 및 정렬 초기화 (그리드 선에 맡김) */
+    width: 100% !important;
+    max-width: none !important;
+    align-self: stretch !important;
+    
+    /* 7번 메뉴 옆으로 이동 (수평 정렬) */
+    margin-top: -58px !important; 
+    margin-bottom: 10px !important;
     
     height: 48px !important;
     background: #ffffff !important;
     border: 1.5px solid #2563eb !important;
     border-radius: 8px !important;
-    padding: 0 12px !important;
+    padding: 0 10px !important;
+    position: relative !important;
     z-index: 10;
   }
 
