@@ -1592,11 +1592,12 @@ mark.key {
 
 /* ============================================================
     📱 모바일 최적화 (768px 이하)
-    7번 메뉴 옆 공간(8, 9번)을 검색창으로 완벽하게 채움
+    검색창 시작점: 5번 메뉴 왼쪽 선과 일치
+    검색창 끝점: 6번 메뉴 오른쪽 선과 일치
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 헤더 구조: 로고를 중앙으로 배치 */
+  /* 1. 헤더: 로고 중앙 정렬 및 여백 */
   body .title { 
     display: flex !important;
     flex-direction: column !important; 
@@ -1612,20 +1613,20 @@ mark.key {
     margin-bottom: 15px !important; 
   }
 
-  /* 2. 네비게이션 영역: 메뉴와 검색창이 들어갈 높이 확보 */
+  /* 2. 네비게이션 컨테이너: 메뉴와 검색창을 위한 높이 확보 */
   body .nav-row {
     display: block !important;
     position: relative !important;
     width: 100% !important;
     padding: 0 15px !important; /* 전체 가이드 라인 15px */
-    min-height: 180px !important; 
+    min-height: 185px !important; 
   }
 
   /* 3. 메뉴 그리드: 3열 강제 고정 */
   body .menu {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important; /* 메뉴 사이 간격 */
+    gap: 10px !important; /* 메뉴 사이 간격 10px */
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -1645,23 +1646,24 @@ mark.key {
     border-radius: 8px;
     color: #334155;
     text-align: center;
+    box-sizing: border-box !important;
   }
 
-  /* ⭐ 4. 검색창: 5번 왼쪽(2열 시작) ~ 6번 오른쪽(3열 끝) 일치 */
+  /* ⭐ 4. 검색창 정밀 배치 (8, 9번 자리를 합쳐서 사용) */
   body .nav-search {
     display: flex !important;
     align-items: center;
     position: absolute !important;
     
-    /* 세로 위치: 3행(7번 메뉴와 수평) */
+    /* 7번 메뉴와 수평을 맞추는 높이 */
     top: 116px !important; 
 
-    /* 왼쪽 끝: 2열 시작점(5번 메뉴 왼쪽 선과 일치) */
-    /* 1열(33.33%) 너비 + 간격(10px)을 고려한 정밀 계산 */
-    left: calc(33.33% + 25px) !important; 
+    /* [왼쪽 끝] 1열(33.33%)이 끝난 직후 + 간격(10px) 
+       => 5번 메뉴의 왼쪽 시작 선과 수직으로 일치 */
+    left: calc(33.33% + 15px) !important; 
 
-    /* 오른쪽 끝: 3열 끝점(6번 메뉴 오른쪽 선과 일치) */
-    /* 부모 컨테이너의 padding(15px)과 일치시켜 세로선 정렬 */
+    /* [오른쪽 끝] 컨테이너 여백 15px와 일치 
+       => 6번 메뉴의 오른쪽 끝 선과 수직으로 일치 */
     right: 15px !important; 
 
     width: auto !important; 
@@ -1684,7 +1686,7 @@ mark.key {
     background: transparent !important;
   }
 
-  /* 5. 배너 및 미디어 섹션 반응형 조절 */
+  /* 5. 기타 모바일 반응형 조절 (배너 및 미디어) */
   body .main-banner { 
     height: 160px !important; 
     margin: 15px !important; 
