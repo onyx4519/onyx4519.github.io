@@ -1645,7 +1645,7 @@ mark.key {
     box-sizing: border-box !important; 
     
     /* ⭐ 핵심 2: 2/3 너비에서 양쪽 간격만큼을 정밀하게 제외 */
-    width: calc(66.6% - 7px) !important; 
+    width: calc(66.6% - 5px) !important; 
     max-width: none !important;
     
     /* ⭐ 핵심 3: 오른쪽 정렬을 확실히 하여 9번 버튼 끝선에 맞춤 */
