@@ -1595,7 +1595,7 @@ mark.key {
    ============================================================ */
 @media screen and (max-width: 768px) {
 
-  /* 1. 네비게이션: 부모 컨테이너 정렬 */
+  /* 1. 네비게이션: 헤더 구성 요소 수직 정렬 */
   .title { 
     flex-direction: column !important; 
     padding: 10px !important; 
@@ -1605,7 +1605,8 @@ mark.key {
   .logo { width: 100px !important; margin: 0 auto 5px !important; }
 
   .nav-row {
-    display: block !important; /* 내부 요소 배치를 위해 블록화 */
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
     padding: 0 15px !important;
   }
@@ -1613,10 +1614,10 @@ mark.key {
   /* 2. 메뉴 그리드: 3열 강제 유지 */
   .menu {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important; /* ⭐ 한 줄에 3개 강제 */
+    grid-template-columns: repeat(3, 1fr) !important; /* ⭐ 한 줄에 3개 고정 */
     gap: 10px !important;
     width: 100% !important;
-    margin: 0 0 10px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
   }
@@ -1626,14 +1627,14 @@ mark.key {
     width: 100% !important;
   }
 
-  /* 메뉴 버튼 스타일 및 글자 깨짐 방지 */
+  /* 메뉴 버튼: 균일 높이 및 글자 깨짐 방지 */
   .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
-    font-size: clamp(0.7rem, 2.5vw, 0.82rem) !important;
-    line-height: 1.1 !important;
+    font-size: clamp(0.72rem, 2.6vw, 0.82rem) !important;
+    line-height: 1.15 !important;
     font-weight: 700;
     word-break: keep-all !important;
     text-align: center;
@@ -1645,31 +1646,32 @@ mark.key {
     overflow: hidden;
   }
 
-  /* 3. 검색창: 7번 메뉴(고객지원) 옆 빈자리로 강제 이동 */
+  /* 3. 검색창: 8~9번 칸(2열부터 끝까지)에 완벽 고정 */
   .nav-search {
-    /* 부모 그리드 밖에서도 7번 메뉴 옆에 붙게 만드는 마법의 설정 */
     display: flex !important;
     align-items: center;
     
-    position: relative !important;
-    float: right; /* 오른쪽으로 붙임 */
+    /* ⭐ 틀 이탈 방지를 위해 그리드 흐름 내에서 위치 강제 지정 */
+    grid-column: 2 / 4 !important; /* 2번째 칸부터 4번째 칸 앞까지 차지 */
     
-    /* 3열 중 2칸 너비 계산: (100% / 3 * 2) + 여백조절 */
-    width: calc(66.6% + 4px) !important; 
-    height: 48px !important;
-    
-    /* 7번 메뉴 바로 옆으로 끌어올리기 */
-    margin-top: -58px !important; 
+    /* 7번 메뉴(고객지원) 옆으로 끌어올리기 */
+    margin-top: -58px !important; /* 메뉴 높이(48px) + 간격(10px) */
     margin-bottom: 20px !important;
     
+    width: 100% !important; /* 할당된 2칸 너비를 꽉 채움 */
+    height: 48px !important;
+    max-width: none !important;
+    
     background: #fff !important;
-    border: 1px solid var(--brand) !important;
+    border: 1.5px solid var(--brand) !important;
     border-radius: 8px !important;
     padding: 0 10px !important;
-    z-index: 50;
+    position: relative !important;
+    z-index: 10;
   }
 
   .nav-search input[type="search"] {
+    flex: 1;
     width: 100% !important;
     border: none !important;
     outline: none !important;
@@ -1677,13 +1679,20 @@ mark.key {
     background: transparent !important;
   }
 
-  /* 4. 배너 및 미디어 섹션 (기존 요청 반영) */
+  .nav-search button {
+    background: none !important;
+    color: var(--brand) !important;
+    width: 24px !important;
+    padding: 0 !important;
+  }
+
+  /* 4. 배너 및 본문 섹션 최적화 */
   .main-banner .banner-text { display: none !important; }
-  .main-banner { height: 160px !important; }
+  .main-banner { height: 160px !important; margin-top: 15px !important; }
 
   .media-row {
     display: grid !important;
-    grid-template-columns: 0.6fr 1.4fr !important; /* 가독성 위해 텍스트 비중 확대 */
+    grid-template-columns: 0.6fr 1.4fr !important;
     gap: 12px !important;
     padding: 0 10px !important;
     align-items: start !important;
