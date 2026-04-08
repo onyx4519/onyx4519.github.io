@@ -1591,91 +1591,75 @@ mark.key {
 }
 
 /* ============================================================
-   📱 모바일 전용 최적화 (900px 이하에서만 자동 적용)
+   📱 모바일 전용 최적화 (기존 900px 블록을 지우고 이 코드를 넣으세요)
    ============================================================ */
 @media (max-width: 900px) {
-  /* 1. 헤더: 로고와 메뉴/검색창을 위아래로 분리 */
+  /* 1. 메인 배너: 텍스트 숨기기 및 높이 최적화 */
+  .main-banner .banner-text {
+    display: none !important; /* 모바일에서 배너 글자 제거 */
+  }
+  .main-banner {
+    height: 180px !important; /* 글자가 없으므로 높이를 줄여 깔끔하게 */
+    margin: 0 10px 20px !important;
+  }
+
+  /* 2. 미디어 섹션: 텍스트 공간을 넓혀 가독성 향상 */
+  .media-row {
+    /* 이미지 0.6 : 텍스트 1.4 비율로 텍스트 영역을 더 넓힘 */
+    grid-template-columns: 0.6fr 1.4fr !important; 
+    gap: 12px !important;
+    padding: 0 10px !important;
+    align-items: flex-start !important; /* 글이 길어져도 위쪽 정렬 */
+  }
+  .copy h3 {
+    font-size: 1rem !important;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .copy p {
+    font-size: 0.82rem !important; /* 폰트 크기 미세 조정 */
+    line-height: 1.45 !important;
+    word-break: keep-all; /* 단어 단위 줄바꿈 */
+  }
+
+  /* 3. 검색창: 오른쪽 끝 정렬 */
   .title {
     flex-direction: column !important;
     padding: 15px !important;
-    gap: 15px !important;
-    height: auto !important;
+    gap: 10px !important;
   }
-
-  .logo {
-    width: 120px !important; /* 로고 크기 축소 */
-    margin: 0 auto;
-  }
-
-  /* 2. 네비게이션: 그리드 해제 후 중앙 정렬 */
-  .main-nav {
-    margin: 0 !important;
-    width: 100% !important;
-  }
-
   .nav-row {
     display: flex !important;
     flex-direction: column !important;
-    grid-template-columns: none !important;
-    gap: 15px !important;
+    align-items: stretch !important;
+  }
+  .nav-search {
+    align-self: flex-end !important; /* 오른쪽 끝으로 붙임 */
+    width: auto !important;
+    min-width: 160px;
+    margin: 5px 5px 0 0 !important;
+    padding: 4px 10px !important;
   }
 
-  /* 3. 메뉴: 7개 메뉴가 겹치지 않게 자동 줄바꿈 (가로 스크롤 방지) */
+  /* 4. 메뉴: 중앙 정렬 유지 */
   .menu {
     display: flex !important;
-    flex-wrap: wrap !important; /* 공간 부족 시 다음 줄로 */
+    flex-wrap: wrap !important;
     justify-content: center !important;
-    width: 100% !important;
-    grid-template-columns: none !important;
-    gap: 8px 12px !important;
-    max-width: 100vw;
+    gap: 6px 10px !important;
+    margin-bottom: 5px;
   }
-
   .menu-item > a {
-    font-size: 0.9rem !important;
-    padding: 6px 10px !important;
-    background: rgba(0, 0, 0, 0.04); /* 터치하기 편하게 배경 추가 */
+    font-size: 0.88rem !important;
+    padding: 6px 8px !important;
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 6px;
-    white-space: nowrap;
   }
 
-  /* 4. 검색창: 모바일 중앙 배치 */
-  .nav-search {
-    justify-self: center !important;
-    width: 100% !important;
-    max-width: 320px !important;
-    margin: 0 auto !important;
-  }
-
-  /* 5. 미디어 섹션: 이미지와 글자가 나란히 보이도록 비율 조정 */
-  .media-row {
-    grid-template-columns: 0.8fr 1.2fr !important;
-    gap: 15px !important;
-    padding: 0 10px !important;
-  }
-
-  .copy h3 { font-size: 1.1rem !important; margin-bottom: 5px; }
-  .copy p { 
-    font-size: 0.88rem !important; 
-    line-height: 1.5 !important;
-    word-break: keep-all; /* 한글 단어 단위 줄바꿈 */
-  }
-
-  /* 6. 메인 배너: 모바일 높이 압축 */
-  .main-banner {
-    height: 220px !important;
-    margin: 0 15px 25px !important;
-  }
-
-  .main-banner .banner-text {
-    inset: auto 10px 10px 10px !important;
-    padding: 12px !important;
-    max-width: none !important;
-  }
-
-  /* 7. 카드 섹션: 1열로 보기 좋게 나열 */
+  /* 5. 기타 섹션 조정 */
+  .logo { width: 110px !important; margin: 0 auto; }
   .intro-cards {
-    grid-template-columns: 1fr !important;
-    padding: 0 20px !important;
+    grid-template-columns: 1fr !important; /* 카드 1열 */
+    padding: 0 15px !important;
   }
 }
