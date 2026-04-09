@@ -1651,35 +1651,33 @@ mark.key {
     box-sizing: border-box !important;
   }
 
-/* ⭐ 4. 검색창: 5번 메뉴 '왼쪽' 선과 일치하도록 left 수치 수정 */
-  body .nav-search {
-    display: flex !important;
-    align-items: center;
-    position: absolute !important;
-    
-    /* 7번 메뉴와 수평 일치 */
-    top: 116px !important; 
+/* ⭐ 검색창: 5번 메뉴 왼쪽 선 ~ 6번 메뉴 오른쪽 끝 일치 */
+body .nav-search {
+  display: flex !important;
+  align-items: center;
+  position: absolute !important;
+  
+  /* 7번 메뉴(3행 1열)와 같은 높이에 배치 */
+  top: 116px !important; 
 
-    /* [왼쪽 끝 수정] 
-       기존: calc(15px + 33.33% + 10px) -> 이 경우 2열(5번)의 오른쪽 끝에 붙음
-       수정: 1열(33.33%)을 건너뛰는 계산을 제거하거나 최소화해야 함
-    */
-    /* 부모패딩(15px) + 1열너비(33.33%) + 간격(10px) 구성에서 
-       실제로 5번 왼쪽선에 맞추기 위해 보정된 수치입니다. */
-    left: calc(33.33% + 25px) !important; 
+  /* [왼쪽 정렬] 
+     부모 패딩(15px) + 1열 너비(33.33%) + 간격(10px) 
+     이 계산값이 정확히 2열(5번 메뉴)의 시작 라인입니다. */
+  left: calc(15px + 33.33% + 10px) !important; 
 
-    /* [오른쪽 끝] 기존과 동일 (수정 불필요) */
-    right: 15px !important; 
+  /* [오른쪽 정렬] 
+     부모 패딩(15px)만큼 띄우면 3열(6번 메뉴)의 오른쪽 끝 라인과 일치합니다. */
+  right: 15px !important; 
 
-    width: auto !important; 
-    height: 48px !important;
-    background: #ffffff !important;
-    border: 1.5px solid var(--brand, #2563eb) !important;
-    border-radius: 8px !important;
-    padding: 0 12px !important;
-    z-index: 1000 !important;
-    box-shadow: none !important; 
-  }
+  width: auto !important; 
+  height: 48px !important;
+  background: #ffffff !important;
+  border: 1.5px solid var(--brand, #2563eb) !important;
+  border-radius: 8px !important;
+  padding: 0 12px !important;
+  z-index: 1000 !important;
+  box-shadow: none !important; 
+}
 
   /* 검색창 내부 입력 필드 */
   body .nav-search input[type="search"] {
