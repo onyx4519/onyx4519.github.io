@@ -1652,21 +1652,22 @@ mark.key {
   }
 
 /* ⭐ 검색창 왼쪽을 5번 박스 시작선으로 확장 */
+/* ⭐ 5번 박스 왼쪽 선 기준 정렬 */
 body .nav-search {
   display: flex !important;
   align-items: center;
   position: absolute !important;
   top: 116px !important; 
 
-  /* [핵심 수정] 
-     기존 calc(15px + ...)에서 앞의 15px을 제거하거나 값을 확 줄여야 합니다.
-     1열 너비(33.3%) + 간격(10px)을 고려했을 때 아래 수치가 5번 왼쪽 선에 가장 가깝습니다. */
-  left: calc(33.33% + 20px) !important; 
+  /* [왼쪽 기준점] 부모패딩(15px) + 1열너비(33.33%) + 간격(10px) 
+     이 값이 정확히 5번 박스의 왼쪽 시작선입니다. */
+  left: calc(15px + 33.33% + 10px) !important; 
 
-  /* 오른쪽은 지금처럼 유지 (6번 끝선 일치) */
+  /* [너비 설정] 2개 박스 분량의 너비에서 간격 등을 고려한 수치 */
+  /* 만약 오른쪽 끝을 6번 박스에 맞추고 싶다면 아래 width 대신 right: 15px를 쓰세요. */
   right: 15px !important; 
-
-  width: auto !important; 
+  
+  width: auto !important; /* right: 15px와 조합되어 자동으로 늘어남 */
   height: 48px !important;
   background: #ffffff !important;
   border: 1.5px solid var(--brand, #2563eb) !important;
