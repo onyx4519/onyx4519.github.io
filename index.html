@@ -45,6 +45,32 @@
 <!-- 위로 올라가기 버튼 -->
 <button class="to-top" aria-label="위로 올라가기">▲</button>
 
+<style>
+/* 📱 오직 모바일(768px 이하)에서만 작동 */
+@media screen and (max-width: 768px) {
+  body .nav-search {
+    display: flex !important;
+    position: absolute !important;
+    top: 116px !important; 
+    left: calc(15px + 33.33% + 10px) !important; /* 5번 왼쪽선 */
+    right: 15px !important; 
+    width: auto !important;
+    z-index: 2000 !important;
+  }
+}
+
+/* 💻 PC(769px 이상)에서는 원래대로 되돌림 (보험용) */
+@media screen and (min-width: 769px) {
+  body .nav-search {
+    position: relative !important; /* PC 버전의 기본 위치 방식 */
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: fit-content !important;
+  }
+}
+</style>
+
 <body>
   <!-- ================= Header / Title ================= -->
   <header class="title">
