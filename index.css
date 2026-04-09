@@ -1631,19 +1631,27 @@ mark.key {
     padding: 0 !important;
   }
 
-  /* 메뉴 버튼 디자인 */
+/* 메뉴 버튼 디자인 (한 줄 고정 버전) */
   body .menu-item > a {
     display: flex !important;
     align-items: center;
     justify-content: center;
     height: 48px !important;
-    font-size: 0.85rem !important;
+    
+    /* 폰트 크기를 화면 폭에 맞춰 조금 더 유동적으로 조절 */
+    font-size: clamp(0.7rem, 3.2vw, 0.85rem) !important; 
     font-weight: 700;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     color: #334155;
     text-align: center;
+
+    /* ⭐ 한 줄 고정 핵심 속성 */
+    white-space: nowrap !important; /* 글자가 길어도 절대 줄바꿈 하지 않음 */
+    overflow: hidden !important;    /* 혹시나 넘치면 숨김 */
+    text-overflow: ellipsis;         /* 너무 길면 ... 표시 (필요시) */
+    padding: 0 2px !important;      /* 좌우 패딩을 줄여 공간 확보 */
   }
 
   /* 4. ⭐ 검색창 정렬 핵심 수정 ⭐ */
